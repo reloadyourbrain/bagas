@@ -29,7 +29,7 @@ async def mentionall(event):
     is_admin = False
     adm = []
     async for x in event.client.iter_participants(
-        chat, filter=ChannelParticipantsAdmins
+        chat_id, filter=ChannelParticipantsAdmins
     ):
         adm.append(x.id)
     if event.sender.id not in adm:
