@@ -15,8 +15,6 @@ logging.basicConfig(
 LOGGER = logging.getLogger(__name__)
 
 client = TelegramClient('client', api_id, api_hash)
-client.start(bot_token=bot_token)
-
 
 spam_chats = []
 
@@ -192,3 +190,4 @@ async def cancel_spam(event):
 
 #print(">>BOT START DEXX<<")
 #client.run_until_disconnected()
+client.start(bot_token=bot_token)
