@@ -1,13 +1,14 @@
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
 
-from telethon import TelegramClient, event, sync
+from telethon import TelegramClient
 
 import config
 
 from ..logging import LOGGER
 
 client = TelegramClient("telethon", api_id=config.API_ID, api_hash=config.API_HASH)
+
 class Anony(Client):
     def __init__(self):
         LOGGER(__name__).info(f"Starting Bot...")
