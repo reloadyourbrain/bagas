@@ -202,6 +202,7 @@ async def mentionall(event):
 @client.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
     is_admin = False
+    chat_id = event.chat_id
     adm = []
     async for x in event.client.iter_participants(
         chat_id, filter=ChannelParticipantsAdmins
