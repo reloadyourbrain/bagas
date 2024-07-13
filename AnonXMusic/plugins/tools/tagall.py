@@ -91,9 +91,9 @@ async def mentionall(event):
     if not is_admin:
         return await event.reply("__Only admins can mention all!__")
 
-    if len(ms) > 0 and event.is_reply:
+    if len(ms) > 1 and event.is_reply:
         return await event.reply("__Give me one argument!__")
-    elif len(ms) > 0:
+    elif len(ms) > 1:
         mode = "text_on_cmd"
         msg = ms.split(" ",1)[1]
     elif event.is_reply:
