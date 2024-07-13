@@ -77,9 +77,13 @@ async def aexec(code, smessatatus):
 @client.on(events.NewMessage(pattern="^/tagall|@all|/all ?(.*)"))
 async def mentionall(event):
     chat_id = event.chat_id
+    mg = event.message.message
     if event.is_private:
         return await event.respond("__This command can be use in groups and channels!__")
-    ms = event.message.message
+    ms = False
+    a = mg.split(" ",1)[1]
+    if not a == None:
+        ms = True
     is_admin = False
     adm = []
     async for x in event.client.iter_participants(
@@ -91,11 +95,11 @@ async def mentionall(event):
     if not is_admin:
         return await event.reply("__Only admins can mention all!__")
 
-    if len(ms) > 1 and event.is_reply:
+    if ms and event.is_reply:
         return await event.reply("__Give me one argument!__")
-    elif len(ms) > 1:
+    elif ms:
         mode = "text_on_cmd"
-        msg = ms.split(" ",1)[1]
+        msg = mg.split(" ",1)[1]
     elif event.is_reply:
         mode = "text_on_reply"
         msg = await event.get_reply_message()
