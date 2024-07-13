@@ -1,7 +1,7 @@
 import os, logging, asyncio, random
 from telethon import Button
 from telethon import TelegramClient, events
-from telethon.tl.types import ChannelParticipantAdmin
+from telethon.tl.types import ChannelParticipantAdmins
 from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
