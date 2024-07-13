@@ -81,9 +81,12 @@ async def mentionall(event):
     if event.is_private:
         return await event.respond("__This command can be use in groups and channels!__")
     ms = False
-    a = mg.split(" ",1)[1]
-    if not a == None:
+    try:
+        a = mg.split(" ",1)[1]
+        print(a)
         ms = True
+    except:
+        ms = False
     is_admin = False
     adm = []
     async for x in event.client.iter_participants(
