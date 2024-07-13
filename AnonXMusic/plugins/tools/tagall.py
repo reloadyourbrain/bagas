@@ -14,7 +14,8 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
+client = TelegramClient('client', api_id, api_hash)
+client.start(bot_token=bot_token)
 
 
 spam_chats = []
