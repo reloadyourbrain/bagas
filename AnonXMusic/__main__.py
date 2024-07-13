@@ -6,6 +6,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from AnonXMusic import LOGGER, app, userbot
+from AnonXMusic.core.bot import client
 from AnonXMusic.core.call import Anony
 from AnonXMusic.misc import sudo
 from AnonXMusic.plugins import ALL_MODULES
@@ -14,6 +15,7 @@ from config import BANNED_USERS
 
 
 async def init():
+    await client.start(bot_token=config.BOT_TOKEN)
     if (
         not config.STRING1
         and not config.STRING2
