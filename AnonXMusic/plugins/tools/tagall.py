@@ -6,6 +6,7 @@ from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 
+from AnonXMusic.core.bot import client
 from config import BOT_TOKEN as bot_token, API_ID as api_id, API_HASH as api_hash
 
 logging.basicConfig(
@@ -14,7 +15,7 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-client = (TelegramClient('client', api_id, api_hash).start(bot_token=bot_token))
+#client = (TelegramClient('client', api_id, api_hash).start(bot_token=bot_token))
 
 spam_chats = []
 
