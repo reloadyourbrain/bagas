@@ -79,7 +79,7 @@ async def mentionall(event):
     chat_id = event.chat_id
     if event.is_private:
         return await event.respond("__This command can be use in groups and channels!__")
-
+    ms = event.message.message
     is_admin = False
     adm = []
     async for x in event.client.iter_participants(
@@ -91,11 +91,11 @@ async def mentionall(event):
     if not is_admin:
         return await event.reply("__Only admins can mention all!__")
 
-    if event.pattern_match.group(2) and event.is_reply:
+    if len(ms) > 0 and event.is_reply:
         return await event.reply("__Give me one argument!__")
-    elif event.pattern_match.group(2):
+    elif len(ms) > 0:
         mode = "text_on_cmd"
-        msg = event.pattern_match.group(2)
+        msg = ms.split(" ",1)[1]
     elif event.is_reply:
         mode = "text_on_reply"
         msg = await event.get_reply_message()
