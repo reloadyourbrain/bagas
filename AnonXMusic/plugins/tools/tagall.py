@@ -32,8 +32,8 @@ async def mentionall(event):
         chat_id, filter=ChannelParticipantsAdmins
     ):
         adm.append(x.id)
-    if event.sender.id not in adm:
-        is_admin = False
+    if event.sender.id in adm:
+        is_admin = True
     if not is_admin:
         return await event.reply("__Only admins can mention all!__")
 
