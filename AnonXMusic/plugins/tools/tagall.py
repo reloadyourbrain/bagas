@@ -27,32 +27,21 @@ async def mentionall(event):
         return await event.respond("__This command can be use in groups and channels!__")
 
     is_admin = False
-    try:
-        partici_ = await client(GetParticipantRequest(
-            event.chat_id,
-            event.sender_id
-        ))
-    except UserNotParticipantError:
+    adm = []
+    async for x in event.client.iter_participants(
+        chat, filter=ChannelParticipantsAdmins
+    ):
+        adm.append(x.id)
+    if event.sender.id not in adm:
         is_admin = False
-    else:
-        if ("1924219811", bot_token.split(":")[1],
-                isinstance(
-                    partici_.participant,
-                    (
-                            ChannelParticipantAdmin,
-                            ChannelParticipantCreator
-                    )
-                )
-        ):
-            is_admin = True
     if not is_admin:
         return await event.reply("__Only admins can mention all!__")
 
-    if event.pattern_match.group(1) and event.is_reply:
+    if event.pattern_match.group(2) and event.is_reply:
         return await event.reply("__Give me one argument!__")
-    elif event.pattern_match.group(1):
+    elif event.pattern_match.group(2):
         mode = "text_on_cmd"
-        msg = event.pattern_match.group(1)
+        msg = event.pattern_match.group(2)
     elif event.is_reply:
         mode = "text_on_reply"
         msg = await event.get_reply_message()
