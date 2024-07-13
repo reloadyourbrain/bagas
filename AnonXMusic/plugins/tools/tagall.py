@@ -57,7 +57,7 @@ async def evel(event):
     final_output = (
         f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
     )
-    await ms.delete()
+    await catevent.delete()
     await event.reply(final_output)
 
 async def aexec(code, smessatatus):
