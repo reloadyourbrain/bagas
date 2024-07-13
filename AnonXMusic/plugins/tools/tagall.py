@@ -1,7 +1,7 @@
 import os, logging, asyncio, random
 from telethon import Button
 from telethon import TelegramClient, events
-from telethon.tl.types import ChannelParticipantAdmin
+from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
@@ -29,7 +29,7 @@ async def mentionall(event):
     is_admin = False
     adm = []
     async for x in event.client.iter_participants(
-        chat_id, filter=ChannelParticipantsAdmin
+        chat_id, filter=ChannelParticipantsAdmins
     ):
         adm.append(x.id)
     if event.sender.id not in adm:
