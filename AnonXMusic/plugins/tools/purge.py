@@ -19,9 +19,9 @@ async def purge(client, message):
             await client.delete_messages(
                 chat_id=message.chat.id, message_ids=i, revoke=True
             )
-        except FloodWait as e:
-            print(e)
-            await asyncio.sleep(e.x)
+    #    except FloodWait as e:
+     #       print(e)
+      #      await asyncio.sleep(e.x)
         except Exception as e:
             await send.edit(f"ERROR: ```\n{e}```")
             return
