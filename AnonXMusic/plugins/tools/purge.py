@@ -1,4 +1,5 @@
-from pyrogram import Client, filters, Message
+from pyrogram import Client, filters
+from pyrogram.types import Message
 from AnonXMusic import app
 
 @app.on_message(~filters.me & filters.command("/purge"))
