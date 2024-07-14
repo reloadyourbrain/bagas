@@ -52,7 +52,7 @@ async def sg(client: Client, message: Message):
             await message.reply(f"{stalk.text}")
     try:
       user_info = await ubot.resolve_peer(sg)
-    return await ubot.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
+      return await ubot.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
     except Exception as e:
       await message.reply(e)
     await lol.delete()
