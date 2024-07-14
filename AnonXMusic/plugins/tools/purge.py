@@ -3,9 +3,9 @@ from pyrogram.types import Message
 from AnonXMusic import app
 
 @app.on_message(~filters.me & filters.command("/purge"))
-async def purge(client: Client, message: Message):
+async def purge(client, message):
     msg = message.reply_to_message
-    send = await message.reply(msg.id, "Starting To Purge Messages!")
+    send = await message.reply("Starting To Purge Messages!")
     if msg:
         itermsg = list(range(msg.id, message.id))
     else:
