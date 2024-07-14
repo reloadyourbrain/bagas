@@ -1,7 +1,7 @@
 from pyrogram import Client, filters, Message
 from AnonXMusic import app
 
-@app.on_message(~filters.me & filters.command("/purge")
+@app.on_message(~filters.me & filters.command("/purge"))
 async def purge(client: Client, message: Message):
     msg = message.reply_to_message
     send = await message.reply(msg.id, "Starting To Purge Messages!")
