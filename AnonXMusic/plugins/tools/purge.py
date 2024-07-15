@@ -7,6 +7,7 @@ from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 
+from AnonXMusic import app
 from AnonXMusic.misc import SUDOERS
 from AnonXMusic.core.bot import client
 
@@ -24,7 +25,11 @@ async def user_is_admin(user_id: int, message):
 
     async for user in client.iter_participants(message.chat_id,
                                              filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in await SUDOERS():
+        SUDOS = []
+        for us in SUDOERS:
+            a = await app.get_user(us)
+            SUDOS.append(a.id)
+        if user_id == user.id or user_id in SUDOS:
             status = True
             break
     return status
@@ -34,7 +39,11 @@ async def is_user_admin(user_id: int, chat_id):
     status = False
     async for user in client.iter_participants(chat_id,
                                              filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in await SUDOERS():
+        SUDOS = []
+        for us in SUDOERS:
+            a = await app.get_user(us)
+            SUDOS.append(a.id)
+        if user_id == user.id or user_id in SUDOS:
             status = True
             break
     return status
