@@ -1,29 +1,69 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from AnonXMusic import app
 
-@app.on_message(~filters.me & filters.command("/purge"))
-async def purgefunc(client, message):
-    await message.delete()
-    if not message.reply_to_message:
-        return await message.reply_text("Membalas pesan untuk dibersihkan.")
-    chat_id = message.chat.id
-    message_ids = []
-    for message_id in range(
-        message.reply_to_message.id,
-        message.id,
-    ):
-        message_ids.append(message_id)
-        if len(message_ids) == 100:
-            await client.delete_messages(
-                chat_id=chat_id,
-                message_ids=message_ids,
-                revoke=True,
-            )
-            message_ids = []
-    if len(message_ids) > 0:
-        await client.delete_messages(
-            chat_id=chat_id,
-            message_ids=message_ids,
-            revoke=True,
-        )
+from AnonXMusic import SUDO_USERS
+from AnonXMusic.userbot import client
+
+
+async def can_delete_messages(message):
+    status = False
+    if message.chat.admin_rights:
+        status = message.chat.admin_rights.delete_messages
+    return status
+
+async def user_is_admin(user_id: int, message):
+    status = False
+    if message.is_private:
+        return True
+
+    async for user in tbot.iter_participants(message.chat_id,
+                                             filter=ChannelParticipantsAdmins):
+        if user_id == user.id or user_id in SUDO_USERS:
+            status = True
+            break
+    return status
+
+
+async def is_user_admin(user_id: int, chat_id):
+    status = False
+    async for user in tbot.iter_participants(chat_id,
+                                             filter=ChannelParticipantsAdmins):
+        if user_id == user.id or user_id in SUDO_USERS:
+            status = True
+            break
+    return status
+
+@client.on(NewMessage(pattern="/purge"))
+async def purge(event):
+    if event.from_id == None:
+        return
+
+    chat = event.chat_id
+
+    if not await user_is_admin(user_id=event.from_id, message=event):
+        await event.reply(chat, "Who dis non-admin telling me what to do?")
+        return
+
+    if not await can_delete_messages(message=event):
+        await event.reply(chat, "I can't delete messages here! Make sure I'm admin and can delete other user's messages.")
+        return
+
+    msg = await event.get_reply_message()
+    if not msg:
+        await event.reply(chat, "Reply to a message to select where to start purging from.")
+        return
+    msgs = []
+    msg_id = msg.id
+    delete_to = event.message.id - 1
+    await event.client.delete_messages(chat, event.message.id)
+
+    msgs.append(event.reply_to_msg_id)
+    for m_id in range(delete_to, msg_id - 1, -1):
+        msgs.append(m_id)
+        if len(msgs) == 100:
+            await event.client.delete_messages(chat, msgs)
+            msgs = []
+
+    await event.client.delete_messages(chat, msgs)
+    text = (chat, "Purge completed.")
+    await event.respond(text, parse_mode='md')
