@@ -43,16 +43,30 @@ async def sg(client: Client, message: Message):
     except Exception as e:
         return await lol.edit(e)
     await asyncio.sleep(1)
+    names = ""
+    usernames = ""
     async for stalk in ubot.search_messages(a.chat.id):
         if stalk.text == None:
             continue
         if not stalk:
             await message.reply("botnya ngambek")
         elif stalk:
-            await message.reply(f"{stalk.text}")
-    try:
-      user_info = await ubot.resolve_peer(sg)
-      await ubot.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
-    except Exception as e:
-      await message.reply(e)
+            text = stalk.text.split("Names", 1)[1]
+            try:
+                name = text.split("Usernames", 1)[0]
+            except:
+                name = text
+            try:
+                username = text.split("Usernames", 1)[1]
+            except:
+                try:
+                    username = stalk.text.split("Usernames", 1)[1]
+                except:
+                    continue
+            names += f"{name}"
+            username += f"{username}"
+    await message.reply(f"Names:\n{names}")
+    await message.reply(f"Usernames:\n{usernames}")
+    user_info = await ubot.resolve_peer(sg)
+    await ubot.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
     await lol.delete()
