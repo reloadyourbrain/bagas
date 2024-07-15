@@ -51,7 +51,7 @@ async def sg(client: Client, message: Message):
         if not stalk:
             await message.reply("botnya ngambek")
         elif stalk:
-            text = stalk.text.split("Names", 1)[1]
+            text = stalk.text.split("Names\n", 1)[1]
             try:
                 name = text.split("Usernames", 1)[0]
             except:
