@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from AnonXMusic import SUDO_USERS
+from AnonXMusic.misc import SUDOERS
 from AnonXMusic.userbot import client
 
 
@@ -28,7 +28,7 @@ async def is_user_admin(user_id: int, chat_id):
     status = False
     async for user in tbot.iter_participants(chat_id,
                                              filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in SUDO_USERS:
+        if user_id == user.id or user_id in SUDOERS:
             status = True
             break
     return status
