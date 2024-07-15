@@ -2,6 +2,11 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from telethon import events
+from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantCreator
+from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.errors import UserNotParticipantError
+
 from AnonXMusic.misc import SUDOERS
 from AnonXMusic.userbot import client
 
