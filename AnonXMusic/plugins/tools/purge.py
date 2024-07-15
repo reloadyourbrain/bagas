@@ -8,7 +8,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 
 from AnonXMusic.misc import SUDOERS
-from AnonXMusic.userbot import client
+from AnonXMusic.core.bot import client
 
 
 async def can_delete_messages(message):
