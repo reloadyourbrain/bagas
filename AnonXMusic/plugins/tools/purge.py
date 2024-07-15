@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from telethon import events
 from AnonXMusic.misc import SUDOERS
 from AnonXMusic.userbot import client
 
@@ -33,7 +34,7 @@ async def is_user_admin(user_id: int, chat_id):
             break
     return status
 
-@client.on(NewMessage(pattern="/purge"))
+@client.on(events.NewMessage(pattern="/purge"))
 async def purge(event):
     if event.from_id == None:
         return
