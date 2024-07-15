@@ -64,7 +64,7 @@ async def sg(client: Client, message: Message):
                 except:
                     continue
             names += f"{name}"
-            username += f"{username}"
+            usernames += f"{username}"
     await message.reply(f"Names:\n{names}")
     await message.reply(f"Usernames:\n{usernames}")
     user_info = await ubot.resolve_peer(sg)
