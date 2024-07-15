@@ -22,9 +22,9 @@ async def user_is_admin(user_id: int, message):
     if message.is_private:
         return True
 
-    async for user in tbot.iter_participants(message.chat_id,
+    async for user in client.iter_participants(message.chat_id,
                                              filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in SUDO_USERS:
+        if user_id == user.id or user_id in SUDOERS:
             status = True
             break
     return status
@@ -32,7 +32,7 @@ async def user_is_admin(user_id: int, message):
 
 async def is_user_admin(user_id: int, chat_id):
     status = False
-    async for user in tbot.iter_participants(chat_id,
+    async for user in client.iter_participants(chat_id,
                                              filter=ChannelParticipantsAdmins):
         if user_id == user.id or user_id in SUDOERS:
             status = True
