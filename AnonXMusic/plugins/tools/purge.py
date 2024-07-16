@@ -27,7 +27,7 @@ async def user_is_admin(user_id: int, message):
     for us in SUDOERS:
         a = await app.get_users(us)
         SUDOS.append(a.id)
-    async for user in client.iter_participants(chat_id, filter=ChannelParticipantsAdmins):
+    async for user in client.iter_participants(message.chat_id, filter=ChannelParticipantsAdmins):
         SUDOS.append(user.id)
     if user_id in SUDOS:
         return True
