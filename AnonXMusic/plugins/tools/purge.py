@@ -55,11 +55,11 @@ async def purge(event):
 
     chat = event.chat_id
 
-    if not await user_is_admin(user_id=event.from_id, message=event.chat_id):
+    if not await user_is_admin(user_id=event.from_id, message=event):
         await event.reply("Who dis non-admin telling me what to do?")
         return
 
-    if not await can_delete_messages(message=event.chat_id):
+    if not await can_delete_messages(message=event):
         await event.reply("I can't delete messages here! Make sure I'm admin and can delete other user's messages.")
         return
 
