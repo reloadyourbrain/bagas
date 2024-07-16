@@ -51,7 +51,15 @@ async def sg(client: Client, message: Message):
         if not stalk:
             await message.reply("botnya ngambek")
         elif stalk:
-            text = stalk.text.split("\n", 1)[1]
+            try:
+                text = stalk.text.split("Names", 1)[1]
+            except:
+                text = stalk.text
+                await message.reply(text)
+                user_info = await ubot.resolve_peer(sg)
+                await ubot.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
+                await lol.delete()
+                return
             try:
                 name = text.split("Usernames", 1)[0]
             except:
