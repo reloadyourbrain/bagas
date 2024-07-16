@@ -75,7 +75,7 @@ async def aexec(code, smessatatus):
         message, event, reply, message.client, p, message.chat_id
     )
 
-@client.on(events.NewMessage(pattern="^/tagall|@all|/all ?(.*)"))
+@client.on(events.NewMessage(pattern="^/tagall|@all|/utag ?(.*)"))
 async def mentionall(event):
     chat_id = event.chat_id
     mg = event.message.message
