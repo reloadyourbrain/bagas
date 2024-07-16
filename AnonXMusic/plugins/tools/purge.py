@@ -23,29 +23,35 @@ async def user_is_admin(user_id: int, message):
     if message.is_private:
         return True
 
+    SUDOS = []
+    for us in SUDOERS:
+        a = await app.get_users(us)
+        SUDOS.append(a.id)
     async for user in client.iter_participants(message.chat_id,
                                              filter=ChannelParticipantsAdmins):
-        SUDOS = []
-        for us in SUDOERS:
-            a = await app.get_users(us)
-            SUDOS.append(a.id)
-        if user_id == user.id or user_id in SUDOS:
-            status = True
-            return status
+        if user_id == user.id:
+            return True
+        if user_id in SUDOS:
+            return True
+        continue
     return status
 
 
 async def is_user_admin(user_id: int, chat_id):
     status = False
+    if message.is_private:
+        return True
+    SUDOS = []
+    for us in SUDOERS:
+        a = await app.get_users(us)
+        SUDOS.append(a.id)
     async for user in client.iter_participants(chat_id,
                                              filter=ChannelParticipantsAdmins):
-        SUDOS = []
-        for us in SUDOERS:
-            a = await app.get_users(us)
-            SUDOS.append(a.id)
-        if user_id == user.id or user_id in SUDOS:
-            status = True
-            return status
+        if user_id == user.id:
+            return True
+        if user_id in SUDOS:
+            return True
+        continue
     return status
 
 @client.on(events.NewMessage(pattern="/purge"))
