@@ -80,5 +80,5 @@ async def purge(event):
             msgs = []
 
     await event.client.delete_messages(chat, msgs)
-    text = (chat, "Purge completed.")
-    await event.respond(text, parse_mode='md')
+    text = "Purge completed."
+    await event.reply(text)
