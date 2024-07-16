@@ -161,7 +161,7 @@ str_2 : "➻ Aliran valid terverifikasi.\n\nSedang diproses..."
 str_3 : "Gagal memutar streaming langsung YouTube. Tidak ditemukan format langsung."
 
 ping_1 : "{0} sedang melakukan ping..."
-ping_2 : "🏓 Pong : <code>{0}ms</code>\n\n<b><u>{1} Status Sistem :</u></b>\n\n↬ Waktu Aktif : {2 }\n↬ RAM : {3}\n↬ CPU : {4}\n↬ Disk : {5}\n↬ python-tgcl : <code>{6}ms</code>"
+ping_2 : "🏓 Pong : <code>{0}ms</code>\n\n<b><u>{1} Status Sistem :</u></b>\n\n↬ Waktu Aktif : {2} \n↬ RAM : {3}\n↬ CPU : {4}\n↬ Disk : {5}\n↬ python-tgcl : <code>{6}ms</code>"
 
 queue_1 : "» Mendapatkan antrian...\n\nHarap tunggu..."
 queue_2 : "» Antrian kosong."
