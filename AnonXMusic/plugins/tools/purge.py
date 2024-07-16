@@ -70,15 +70,18 @@ async def purge(event):
     msgs = []
     msg_id = msg.id
     delete_to = event.message.id - 1
+    j = 2
     await event.client.delete_messages(chat, event.message.id)
-
     msgs.append(event.reply_to_msg_id)
     for m_id in range(delete_to, msg_id - 1, -1):
+        j + 1
         msgs.append(m_id)
         if len(msgs) == 100:
             await event.client.delete_messages(chat, msgs)
             msgs = []
 
     await event.client.delete_messages(chat, msgs)
-    text = "Purge completed."
+    text = f"Deleted {j} messages.."
+    await event.reply(text)
+    text = "Purge completed.."
     await event.reply(text)
