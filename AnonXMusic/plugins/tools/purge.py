@@ -31,7 +31,7 @@ async def user_is_admin(user_id: int, message):
             SUDOS.append(a.id)
         if user_id == user.id or user_id in SUDOS:
             status = True
-            break
+            return status
     return status
 
 
@@ -45,7 +45,7 @@ async def is_user_admin(user_id: int, chat_id):
             SUDOS.append(a.id)
         if user_id == user.id or user_id in SUDOS:
             status = True
-            break
+            return status
     return status
 
 @client.on(events.NewMessage(pattern="/purge"))
