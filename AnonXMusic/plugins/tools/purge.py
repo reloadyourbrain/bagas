@@ -27,8 +27,7 @@ async def user_is_admin(user_id: int, message):
     for us in SUDOERS:
         a = await app.get_users(us)
         SUDOS.append(a.id)
-    async for user in client.iter_participants(message.chat_id,
-                                             filter=ChannelParticipantsAdmins):
+    async for user in client.iter_participants(message.chat_id, filter=ChannelParticipantsAdmins):
         if user_id == user.id:
             return True
         if user_id in SUDOS:
@@ -45,8 +44,7 @@ async def is_user_admin(user_id: int, chat_id):
     for us in SUDOERS:
         a = await app.get_users(us)
         SUDOS.append(a.id)
-    async for user in client.iter_participants(chat_id,
-                                             filter=ChannelParticipantsAdmins):
+    async for user in client.iter_participants(chat_id, filter=ChannelParticipantsAdmins):
         if user_id == user.id:
             return True
         if user_id in SUDOS:
