@@ -15,7 +15,7 @@ async def auto_leave(chat):
     for num in assistants:
         client = await get_client(num)
         left = 0
-        if left = 1:
+        if left == 1:
             return await app.send_message(chat, "Music is comming..")
         try:
             async for i in client.get_dialogs():
