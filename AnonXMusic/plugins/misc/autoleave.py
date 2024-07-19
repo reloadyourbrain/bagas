@@ -9,37 +9,35 @@ from AnonXMusic.core.call import Anony, autoend
 from AnonXMusic.utils.database import get_client, is_active_chat, is_autoend
 
 
-async def auto_leave():
-    if config.AUTO_LEAVING_ASSISTANT:
-        while not await asyncio.sleep(900):
-            from AnonXMusic.core.userbot import assistants
+async def auto_leave(chat):
+        from AnonXMusic.core.userbot import assistants
 
-            for num in assistants:
-                client = await get_client(num)
-                left = 0
-                try:
-                    async for i in client.get_dialogs():
-                        if i.chat.type in [
+        for num in assistants:
+            client = await get_client(num)
+            left = 0
+            if left = 1:
+                return await app.send_message(chat, "Music is comming..")
+            try:
+                async for i in client.get_dialogs():
+                    if i.chat.type in [
                             ChatType.SUPERGROUP,
                             ChatType.GROUP,
                             ChatType.CHANNEL,
                         ]:
-                            if (
+                        if (
                                 i.chat.id != config.LOGGER_ID
                             ):
-                                if left == 20:
+                            if not await is_active_chat(i.chat.id):
+                                try:
+                                    await client.leave_chat(i.chat.id)
+                                    left += 1
+                                except:
                                     continue
-                                if not await is_active_chat(i.chat.id):
-                                    try:
-                                        await client.leave_chat(i.chat.id)
-                                        left += 1
-                                    except:
-                                        continue
-                except:
-                    pass
+            except:
+                pass
 
 
-asyncio.create_task(auto_leave())
+#asyncio.create_task(auto_leave())
 
 
 async def auto_end():
