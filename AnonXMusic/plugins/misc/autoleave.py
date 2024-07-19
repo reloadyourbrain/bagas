@@ -9,7 +9,7 @@ from AnonXMusic.core.call import Anony, autoend
 from AnonXMusic.utils.database import get_client, is_active_chat, is_autoend
 
 
-async def auto_leave(chat):
+async def auto_leave(chat, link):
     from AnonXMusic.core.userbot import assistants
 
     for num in assistants:
