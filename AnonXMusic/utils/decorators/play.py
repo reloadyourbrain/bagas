@@ -11,6 +11,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from AnonXMusic import YouTube, app
 from AnonXMusic.misc import SUDOERS
+from AnonXMusic.plugins.misc.autoleave import auto_leave
 from AnonXMusic.utils.database import (
     get_assistant,
     get_cmode,
@@ -144,8 +145,11 @@ def PlayWrapper(command):
                             invitelink = await app.export_chat_invite_link(chat_id)
                         except ChatAdminRequired:
                             return await message.reply_text(_["call_1"])
-                        except Exception as e:
-                            return await message.reply_text(
+                        except Exception:
+                            try:
+                                await auto_leave(chat_id)
+                            except Exception as e:
+                                return await message.reply_text(
                                 _["call_3"].format(app.mention, type(e).__name__)
                             )
 
@@ -160,16 +164,22 @@ def PlayWrapper(command):
                 except InviteRequestSent:
                     try:
                         await app.approve_chat_join_request(chat_id, userbot.id)
-                    except Exception as e:
-                        return await message.reply_text(
+                    except Exception:
+                        try:
+                            await auto_leave(chat_id)
+                        except Exception as e:
+                            return await message.reply_text(
                             _["call_3"].format(app.mention, type(e).__name__)
                         )
                     await asyncio.sleep(3)
                     await myu.edit(_["call_5"].format(app.mention))
                 except UserAlreadyParticipant:
                     pass
-                except Exception as e:
-                    return await message.reply_text(
+                except Exception:
+                    try:
+                        await auto_leave(chat_id)
+                    except Exception as e:
+                        return await message.reply_text(
                         _["call_3"].format(app.mention, type(e).__name__)
                     )
 
