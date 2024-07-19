@@ -147,7 +147,7 @@ def PlayWrapper(command):
                             return await message.reply_text(_["call_1"])
                         except Exception:
                             try:
-                                await auto_leave(chat_id)
+                                await auto_leave(chat_id, invitelink)
                             except Exception as e:
                                 return await message.reply_text(
                                 _["call_3"].format(app.mention, type(e).__name__)
@@ -166,7 +166,7 @@ def PlayWrapper(command):
                         await app.approve_chat_join_request(chat_id, userbot.id)
                     except Exception:
                         try:
-                            await auto_leave(chat_id)
+                            await auto_leave(chat_id, invitelink)
                         except Exception as e:
                             return await message.reply_text(
                             _["call_3"].format(app.mention, type(e).__name__)
@@ -177,7 +177,7 @@ def PlayWrapper(command):
                     pass
                 except Exception:
                     try:
-                        await auto_leave(chat_id)
+                        await auto_leave(chat_id, invitelink)
                     except Exception as e:
                         return await message.reply_text(
                         _["call_3"].format(app.mention, type(e).__name__)
