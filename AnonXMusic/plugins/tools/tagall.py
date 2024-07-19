@@ -6,8 +6,9 @@ from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 
+from AnonXMusic import app
 from AnonXMusic.core.bot import client
-from config import BOT_TOKEN as bot_token, API_ID as api_id, API_HASH as api_hash
+from config import BOT_TOKEN as bot_token, API_ID as api_id, API_HASH as api_hash, LOGGER_ID as loger
 
 logging.basicConfig(
     level=logging.INFO,
@@ -84,7 +85,7 @@ async def mentionall(event):
     ms = False
     try:
         a = mg.split(" ",1)[1]
-        print(a)
+        await app.send_message(loger, f"#tagall in : {chat_id}\n\n{a}")
         ms = True
     except:
         ms = False
