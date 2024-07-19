@@ -10,31 +10,29 @@ from AnonXMusic.utils.database import get_client, is_active_chat, is_autoend
 
 
 async def auto_leave(chat):
-        from AnonXMusic.core.userbot import assistants
+    from AnonXMusic.core.userbot import assistants
 
-        for num in assistants:
-            client = await get_client(num)
-            left = 0
-            if left = 1:
-                return await app.send_message(chat, "Music is comming..")
-            try:
-                async for i in client.get_dialogs():
-                    if i.chat.type in [
+    for num in assistants:
+        client = await get_client(num)
+        left = 0
+        if left = 1:
+            return await app.send_message(chat, "Music is comming..")
+        try:
+            async for i in client.get_dialogs():
+                if i.chat.type in [
                             ChatType.SUPERGROUP,
                             ChatType.GROUP,
                             ChatType.CHANNEL,
                         ]:
-                        if (
-                                i.chat.id != config.LOGGER_ID
-                            ):
-                            if not await is_active_chat(i.chat.id):
-                                try:
-                                    await client.leave_chat(i.chat.id)
-                                    left += 1
-                                except:
-                                    continue
-            except:
-                pass
+                    if i.chat.id != config.LOGGER_ID:
+                        if not await is_active_chat(i.chat.id):
+                            try:
+                                await client.leave_chat(i.chat.id)
+                                left += 1
+                            except:
+                                continue
+        except:
+            pass
 
 
 #asyncio.create_task(auto_leave())
