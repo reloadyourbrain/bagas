@@ -16,6 +16,7 @@ async def auto_leave(chat):
         client = await get_client(num)
         left = 0
         if left == 1:
+            await client.join_chat(link)
             return await app.send_message(chat, "Music is comming..")
         try:
             async for i in client.get_dialogs():
